@@ -12,8 +12,7 @@ module.exports = function (grunt) {
     clean:{
       dist:{
         src: 'dist'
-      },
-      postMin: ['dist/public/vendor', 'dist/public/js/controllers', 'dist/public/js/services','dist/public/js/main.js'] 
+      }
     },
     usemin: {
       html: 'dist/app/views/**/*.ejs'
@@ -33,9 +32,9 @@ module.exports = function (grunt) {
     } 
   });
 
-  grunt.registerTask('default',['dist', 'minifica', 'clean:postMin']);
+  grunt.registerTask('default',['dist', 'minifica']);
   grunt.registerTask('minifica', ['useminPrepare', 'ngAnnotate','concat', 'uglify', 'cssmin', 'usemin'])
-  grunt.registerTask('dist',['clean:dist', 'copy']);
+  grunt.registerTask('dist',['clean', 'copy']);
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
