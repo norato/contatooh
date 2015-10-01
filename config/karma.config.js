@@ -22,7 +22,10 @@ module.exports = function(config) {
         '../public/js/main.js',
         '../public/js/controllers/**/*.js',
         '../public/js/services/**/*.js',
+        '../public/js/directives/**/*.js',
+        '../public/js/directives/**/*.html',
         '../test/spec/**/*Spec.js'
+
     ],
 
 
@@ -34,6 +37,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        '../public/js/directives/**/*.html': 'ng-html2js'
     },
 
 
@@ -59,7 +63,16 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
-    plugins: ['karma-jasmine', 'karma-phantomjs-launcher'],
+    plugins: [
+        'karma-jasmine', 
+        'karma-phantomjs-launcher',
+        'karma-ng-html2js-preprocessor'
+    ],
+
+    ngHtml2JsPreprocessor:{
+        moduleName: 'templates',
+        stripPrefix: '.*/public/'
+    },
 
 
     // start these browsers
