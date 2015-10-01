@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.12"
+  - '0.12'
 notifications:
   - fnoratol@gmail.com
 before_install:
@@ -9,7 +9,22 @@ before_install:
   - npm install -g karma-cli
   - bower install
 before_script:
-  - grunt
-  - cd dist
+  - node test/data.js
+  - grunt minifica
 script:
   - karma start config/karma.config.js --single-run --browsers PhantomJS
+deploy:
+  provider: openshift
+  user: fnoratol@gmail.com
+  password:
+    secure: TAxt8dSRLmXWq7QEdsKbW0LQ0VftWCeUxJ9FwRju+t29nbWQ6tQI4K8Shr8SYKEnol6ePror1gGoZrGxt0gyjm7Cl56dYe2zAs8+BFd6sb8gmXcTI5eXTIi6IvbSXMa1EV5EsP7Mo9/mgt5/RoQzB5xPYIhxgf9G0KZV9fJPgDSM5G5uR9NtPNPQ8P1eQWx7QGpMHKHNnaLicrR6eUiwB566AOIqY9FBhgKfGnQAedCHJOjd5W7cKfPVRVSOQa0uwKPiVqXpG1y6tRKi0kJspmOaX6ReMkBemGBmWyk2CNRcJi58hiBn7gUX1oEcY/653IE1hklShMY4YZrytX7E/kbwG3EmSrIo/T/9EfyOT3ZSri0nH2L/YRnn50JMx2EGHSnnfAbY6pZWwVwLi1/D5LKNmaFDGcjL5ss6/Gkh7t1681qE1RBjfJfU20HxBOe6Wnush+r1bGZCRuvplod1rgE0ERCoBUn5lgyt3y1soZFtNsdVKiIeriWtc8irhrq9INORX846OvwF22FMx/nJffgqqYKwihkfqbCqWnXBqbhSusOZZbGqB/E1eT1+81BhZJ/xSI3PfzVKXpO5WJhymyksLPnWi8J0yGqh4QQzoZetVMh4mh2kDnjnbUnGu9oH3vO4vvvmEQaYgvYkAsatvDSe+Cqv7E43MXIG3psso1Q=
+  app: contatooh
+  domain: http://contatooh-norato.rhcloud.com/
+  on:
+    repo: norato/contatooh
+before_deploy:
+  - git config --global user.email 'travis@travis-ci.com'
+  - git config --global user.name 'Travis CI'
+  - git checkout $TRAVIS_BRANCH
+  - git add --all
+  - git commit -am "Travis commit"
